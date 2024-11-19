@@ -8,7 +8,8 @@
 <body>
     <h1>ゲーム結果</h1>
     <p>このページでは、ゲーム結果が表示されます。</p>
-    <img src="https://example.com/game_result.jpg" alt="ゲーム結果画像">
+    <!-- 画像のパスをリポジトリ内のパスに修正 -->
+    <img src="./shin/ren.png" alt="ゲーム結果画像" style="max-width: 100%; height: auto;">
     <button onclick="alert('公式LINEに結果が送信されます')">結果を受け取る</button>
 </body>
 </html>
