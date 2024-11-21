@@ -8,7 +8,20 @@
 <body>
     <h1>ゲーム結果</h1>
     <p>このページでは、ゲーム結果が表示されます。</p>
-    <img src="./shin/ren.png" alt="ゲーム結果画像" style="max-width: 100%; height: auto;">
-    <button onclick="alert('公式LINEに結果が送信されます')">結果を受け取る</button>
+
+    <p>画像番号を入力してください（例: 001, 002, ...）</p>
+    <input type="text" id="imageNumber" placeholder="番号を入力">
+    <button onclick="loadImage()">画像を表示</button>
+    
+    <!-- 画像表示 -->
+    <img id="resultImage" src="" alt="ゲーム結果画像" style="max-width: 100%; height: auto;">
+
+    <script>
+        function loadImage() {
+            var imageNumber = document.getElementById('imageNumber').value;  // 入力された番号を取得
+            var imageUrl = "/get_image/" + imageNumber;  // サーバーから画像を取得するURLを生成
+            document.getElementById('resultImage').src = imageUrl;  // 画像のsrcを設定
+        }
+    </script>
 </body>
 </html>
