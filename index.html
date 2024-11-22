@@ -9,35 +9,37 @@
     <h1>ゲーム結果</h1>
     <p>このページでは、ゲーム結果が表示されます。</p>
 
-    <p>画像番号を入力してください（例: 001, 002, ...）</p>
-    <input type="text" id="imageNumber" placeholder="番号を入力">
-    <button onclick="loadImage()">画像を表示</button>
-    
     <!-- 画像表示 -->
     <img id="resultImage" src="" alt="ゲーム結果画像" style="max-width: 100%; height: auto; display: none;">
 
-    <script>
-        function loadImage() {
-            var imageNumber = document.getElementById('imageNumber').value;  // 入力された番号を取得
-            if (imageNumber) {
-                var imageUrl = "https://ren-241121.onrender.com/get_image/" + imageNumber + "?t=" + new Date().getTime();  // 完全なURLを指定し、キャッシュを防ぐためにtimestampを追加
-                console.log("Generated Image URL: " + imageUrl);  // 生成されたURLをコンソールに表示
-                var imgElement = document.getElementById('resultImage');
-                imgElement.src = imageUrl;  // 画像のsrcを設定
+    <p id="errorMessage" style="color: red; display: none;">画像番号が指定されていません。</p>
 
-                // 画像がロードされるまで、画像エレメントを非表示にしておく
+    <script>
+        window.onload = function() {
+            // URLのクエリパラメータを取得
+            const params = new URLSearchParams(window.location.search);
+            const imageNumber = params.get('key'); // 例: ?key=001 の "001" を取得
+
+            if (imageNumber) {
+                var imageUrl = "https://ren-241121.onrender.com/get_image/" + imageNumber + "?t=" + new Date().getTime(); // URLを生成
+                console.log("Generated Image URL: " + imageUrl); // 確認用ログ
+                var imgElement = document.getElementById('resultImage');
+                imgElement.src = imageUrl; // 画像のsrcを設定
+
+                // 画像がロードされるまで非表示
                 imgElement.onload = function() {
-                    imgElement.style.display = "block";  // 画像がロードされたら表示
+                    imgElement.style.display = "block"; // 画像を表示
                 };
 
                 imgElement.onerror = function() {
                     alert("指定された画像が見つかりませんでした。番号を再確認してください。");
-                    imgElement.style.display = "none";  // エラー時は画像を非表示にする
+                    imgElement.style.display = "none"; // エラー時は非表示
                 };
             } else {
-                alert("画像番号を入力してください");
+                // クエリパラメータが存在しない場合のエラー処理
+                document.getElementById('errorMessage').style.display = "block";
             }
-        }
+        };
     </script>
 </body>
 </html>
