@@ -69,15 +69,13 @@
 
         <script>
             window.onload = function() {
-                // URLのクエリパラメータを取得
                 const params = new URLSearchParams(window.location.search);
-                const key = params.get('key'); // 例: ?key=001 の "001" を取得
-
+                const key = params.get('key'); // URLパラメータ "key" を取得
+        
                 if (key) {
-                    // 画像URLを生成
                     const imageUrl = `https://ren-241121.onrender.com/get_image/${key}?t=${new Date().getTime()}`;
                     const textUrl = `https://ren-241121.onrender.com/get_text/${key}?t=${new Date().getTime()}`;
-
+        
                     // 画像処理
                     const imgElement = document.getElementById('resultImage');
                     imgElement.src = imageUrl;
@@ -88,32 +86,32 @@
                         imgElement.style.display = "none";
                         document.getElementById('errorMessage_Nopicture').style.display = "block";
                     };
-
+        
                     // テキスト処理
                     fetch(textUrl)
-                    .then(response => {
-                    if (!response.ok) {
-                        throw new Error("No text or time up");
-                    }
-                    return response.text();
-                })
-                .then(text => {
-                    const textElement = document.createElement('p');
-                    textElement.textContent = text;
-                    document.body.appendChild(textElement); // テキストをページに追加
-                })
-                .catch(error => {
-                    console.error(error);
-                    document.getElementById('errorMessage').style.display = "block";
-                });
-
+                        .then(response => {
+                            if (!response.ok) {
+                                throw new Error("No text or time up");
+                            }
+                            return response.text();
+                        })
+                        .then(text => {
+                            const textElement = document.getElementById('textResult');
+                            textElement.textContent = text;
+                            textElement.style.display = "block"; // 表示
+                        })
+                        .catch(error => {
+                            console.error(error);
+                            document.getElementById('errorMessage_Notext').style.display = "block";
+                        });
+        
                 } else {
-                    // クエリパラメータが存在しない場合のエラー処理
+                    // クエリパラメータがない場合のエラー
                     document.getElementById('errorMessage_Nokey').style.display = "block";
                 }
             };
         </script>
-
+        
         <p style="color:red">注：このサイトは、ゲーム終了後1時間でアクセス不可となります。</p>
     </main>
 
