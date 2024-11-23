@@ -63,7 +63,9 @@
         <p id="textResult" style="display: none;"></p>
 
         <!-- エラーメッセージ -->
-        <p id="errorMessage" style="color: red; display: none;">error: no picture or text</p>
+        <p id="errorMessage_Nopicture" style="color: red; display: none;">error: no picture</p>
+        <p id="errorMessage_Notext" style="color: red; display: none;">error: no picture</p>
+        <p id="errorMessage_Nokey" style="color: red; display: none;">error: no key</p>
 
         <script>
             window.onload = function() {
@@ -84,7 +86,7 @@
                     };
                     imgElement.onerror = function() {
                         imgElement.style.display = "none";
-                        document.getElementById('errorMessage').style.display = "block";
+                        document.getElementById('errorMessage_Nopicture').style.display = "block";
                     };
 
                     // テキスト処理
@@ -99,12 +101,12 @@
                             textElement.style.display = "block"; // 表示
                         })
                         .catch(() => {
-                            document.getElementById('errorMessage').style.display = "block";
+                            document.getElementById('errorMessage_Notext').style.display = "block";
                         });
 
                 } else {
                     // クエリパラメータが存在しない場合のエラー処理
-                    document.getElementById('errorMessage').style.display = "block";
+                    document.getElementById('errorMessage_Nokey').style.display = "block";
                 }
             };
         </script>
