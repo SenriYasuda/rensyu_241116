@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>アライグマゲーミング ゲーム結果</title> <!---このtitleはwebを複数開いた時のタブに表示されるブラウザタイトルである。ページ本文には表示されない-->
+    <title>アライグマゲーミング ゲーム結果</title>
     <style>
         header {
             height: 10vh;
@@ -14,28 +14,18 @@
             text-align: center;
         }
         footer p{
-            text-align: right; /* 右詰め */
-            font-size: 0.8em;  /* 文字を小さくする */
+            text-align: right;
+            font-size: 0.8em;
         }
-                /* 各文字のスタイル */
-                .jumping-text span {
+        .jumping-text span {
             display: inline-block;
             animation: jump 7s ease-in-out infinite;
         }
-
-        /* ジャンプアニメーション */
         @keyframes jump {
-            0% {
-                transform: translateY(0);
-            }
-            2% {
-                transform: translateY(-5vh); /* 上にジャンプ */
-            }
-            7%{
-                transform: translateY(0);
-            }
+            0% { transform: translateY(0); }
+            2% { transform: translateY(-1.5vh); }
+            7% { transform: translateY(0); }
         }
-        /* 各文字のアニメーションの遅延を設定 */
         .jumping-text span:nth-child(1) {animation-delay: 0s;}
         .jumping-text span:nth-child(2) {animation-delay: 0.05s;}
         .jumping-text span:nth-child(3) {animation-delay: 0.10s;}
@@ -48,69 +38,77 @@
         .jumping-text span:nth-child(10) {animation-delay: 0.45s;}
         .jumping-text span:nth-child(11) {animation-delay: 0.50s;}
         .jumping-text span:nth-child(12) {animation-delay: 0.55s;}
-        .jumping-text span:nth-child(13) {animation-delay: 0.60s;}
-        .jumping-text span:nth-child(14) {animation-delay: 0.65s;}
-        .jumping-text span:nth-child(15) {animation-delay: 0.70s;}
-        .jumping-text span:nth-child(16) {animation-delay: 0.75s;}
-        .jumping-text span:nth-child(17) {animation-delay: 0.80s;}
-        .jumping-text span:nth-child(18) {animation-delay: 0.85s;}
-        .jumping-text span:nth-child(19) {animation-delay: 0.90s;}
-        .jumping-text span:nth-child(20) {animation-delay: 0.95s;}
-        .jumping-text span:nth-child(21) {animation-delay: 1.00s;}
-
         .underlined-text {
-            text-decoration: underline; /* 下線を引く */
+            text-decoration: underline;
         }
     </style>
 </head>
 <body>
     <header>
         <h1 class="jumping-text">
-            <span>T</span><span>H</span><span>A</span><span>N</span><span>K</span>
-            <span> </span>
-            <span>Y</span><span>O</span><span>U</span>
-            <span> </span>
-            <span>F</span><span>O</span><span>R</span>
-            <span> </span>
+            <span>T</span><span>H</span><span>A</span><span>N</span><span>K</span><span> </span>
+            <span>Y</span><span>O</span><span>U</span><span> </span>
+            <span>F</span><span>O</span><span>R</span><span> </span>
             <span>P</span><span>L</span><span>A</span><span>Y</span><span>I</span><span>N</span><span>G</span>
         </h1>
     </header>
     <main>
-        <h2 class ="underlined-text">ゲーム結果</h2>
+        <h2 class="underlined-text">ゲーム結果</h2>
         <p>このページでは、ゲーム結果が表示されます。</p>
 
-    <!-- 画像表示 -->
+        <!-- 画像表示 -->
         <img id="resultImage" src="" alt="ゲーム結果画像" style="max-width: 100%; height: auto; display: none;">
 
-        <p id="errorMessage" style="color: red; display: none;">error:no picture</p>
+        <!-- テキスト内容表示 -->
+        <p id="textResult" style="display: none;"></p>
+
+        <!-- エラーメッセージ -->
+        <p id="errorMessage" style="color: red; display: none;">error: no picture or text</p>
 
         <script>
             window.onload = function() {
                 // URLのクエリパラメータを取得
                 const params = new URLSearchParams(window.location.search);
-                const imageNumber = params.get('key'); // 例: ?key=001 の "001" を取得
+                const key = params.get('key'); // 例: ?key=001 の "001" を取得
 
-                if (imageNumber) {
-                    var imageUrl = "https://ren-241121.onrender.com/get_image/" + imageNumber + "?t=" + new Date().getTime(); // URLを生成
-                    console.log("Generated Image URL: " + imageUrl); // 確認用ログ
-                    var imgElement = document.getElementById('resultImage');
-                    imgElement.src = imageUrl; // 画像のsrcを設定
+                if (key) {
+                    // 画像URLを生成
+                    const imageUrl = `https://ren-241121.onrender.com/get_image/${key}?t=${new Date().getTime()}`;
+                    const textUrl = `https://ren-241121.onrender.com/get_text/${key}?t=${new Date().getTime()}`;
 
-                    // 画像がロードされるまで非表示
+                    // 画像処理
+                    const imgElement = document.getElementById('resultImage');
+                    imgElement.src = imageUrl;
                     imgElement.onload = function() {
-                        imgElement.style.display = "block"; // 画像を表示
+                        imgElement.style.display = "block";
                     };
-
                     imgElement.onerror = function() {
-                        imgElement.style.display = "none"; // エラー時は非表示
+                        imgElement.style.display = "none";
                         document.getElementById('errorMessage').style.display = "block";
                     };
+
+                    // テキスト処理
+                    fetch(textUrl)
+                        .then(response => {
+                            if (!response.ok) throw new Error("Text fetch error");
+                            return response.text();
+                        })
+                        .then(text => {
+                            const textElement = document.getElementById('textResult');
+                            textElement.textContent = text; // テキストを設定
+                            textElement.style.display = "block"; // 表示
+                        })
+                        .catch(() => {
+                            document.getElementById('errorMessage').style.display = "block";
+                        });
+
                 } else {
                     // クエリパラメータが存在しない場合のエラー処理
                     document.getElementById('errorMessage').style.display = "block";
                 }
             };
         </script>
+
         <p style="color:red">注：このサイトは、ゲーム終了後1時間でアクセス不可となります。</p>
     </main>
 
