@@ -64,8 +64,8 @@
 
         <!-- エラーメッセージ -->
         <p id="errorMessage_Nopicture" style="color: red; display: none;">error: no picture</p>
-        <p id="errorMessage_Notext" style="color: red; display: none;">error: no picture</p>
-        <p id="errorMessage_Nokey" style="color: red; display: none;">error: no key</p>
+        <p id="errorMessage_Notext" style="color: red; display: none;">error: no text</p>
+        <p id="errorMessage_Nokey" style="color: red; display: none;">error: no picture and text</p>
 
         <script>
             window.onload = function() {
@@ -91,18 +91,21 @@
 
                     // テキスト処理
                     fetch(textUrl)
-                        .then(response => {
-                            if (!response.ok) throw new Error("Text fetch error");
-                            return response.text();
-                        })
-                        .then(text => {
-                            const textElement = document.getElementById('textResult');
-                            textElement.textContent = text; // テキストを設定
-                            textElement.style.display = "block"; // 表示
-                        })
-                        .catch(() => {
-                            document.getElementById('errorMessage_Notext').style.display = "block";
-                        });
+                    .then(response => {
+                    if (!response.ok) {
+                        throw new Error("No text or time up");
+                    }
+                    return response.text();
+                })
+                .then(text => {
+                    const textElement = document.createElement('p');
+                    textElement.textContent = text;
+                    document.body.appendChild(textElement); // テキストをページに追加
+                })
+                .catch(error => {
+                    console.error(error);
+                    document.getElementById('errorMessage').style.display = "block";
+                });
 
                 } else {
                     // クエリパラメータが存在しない場合のエラー処理
