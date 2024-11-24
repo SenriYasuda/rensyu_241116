@@ -59,8 +59,7 @@
         <!-- 画像表示 -->
         <img id="resultImage" src="" alt="ゲーム結果画像" style="max-width: 100%; height: auto; display: none; margin: 0 auto;">
 
-        <!-- テキスト内容表示 -->
-        <p id="textResult" style="display: none;"></p>
+        
 
         <!-- エラーメッセージ -->
         <p id="errorMessage_Nopicture" style="color: red; display: none;">error: no picture</p>
@@ -74,8 +73,7 @@
         
                 if (key) {
                     const imageUrl = `https://ren-241121.onrender.com/get_image/${key}?t=${new Date().getTime()}`;
-                    const textUrl = `https://ren-241121.onrender.com/get_text/${key}?t=${new Date().getTime()}`;
-        
+
                     // 画像処理
                     const imgElement = document.getElementById('resultImage');
                     imgElement.src = imageUrl;
@@ -86,25 +84,7 @@
                         imgElement.style.display = "none";
                         document.getElementById('errorMessage_Nopicture').style.display = "block";
                     };
-        
-                    // テキスト処理
-                    fetch(textUrl)
-                        .then(response => {
-                            if (!response.ok) {
-                                throw new Error("No text or time up");
-                            }
-                            return response.text();
-                        })
-                        .then(text => {
-                            const textElement = document.getElementById('textResult');
-                            textElement.textContent = text;
-                            textElement.style.display = "block"; // 表示
-                        })
-                        .catch(error => {
-                            console.error(error);
-                            document.getElementById('errorMessage_Notext').style.display = "block";
-                        });
-        
+
                 } else {
                     // クエリパラメータがない場合のエラー
                     document.getElementById('errorMessage_Nokey').style.display = "block";
