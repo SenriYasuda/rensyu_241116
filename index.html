@@ -85,16 +85,7 @@
                         document.getElementById('errorMessage_Nopicture').style.display = "block";
                     };
 
-                    // ファイル名から文字列を抽出して表示
-                    const fileName = key; // 画像のキーをそのまま使用
-                    const extractedText = fileName.replace(/^pic\d+/, '').replace(/\.jpg$/, ''); // 前の"pic数字"と拡張子".jpg"を除去
-            
-                    // 抽出結果を表示
-                    const extractedTextElement = document.createElement('p');
-                    extractedTextElement.textContent = `画像情報: ${extractedText}`;
-                    extractedTextElement.style.textAlign = 'center'; // テキストを中央揃え
-                    document.querySelector('main').appendChild(extractedTextElement);
-
+                    
                 } else {
                     // クエリパラメータがない場合のエラー
                     document.getElementById('errorMessage_Nokey').style.display = "block";
