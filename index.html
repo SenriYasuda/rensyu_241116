@@ -87,12 +87,10 @@
                         document.getElementById('errorMessage_Nopicture').style.display = "block";
                     };
 
-                    // ファイル名から文字列を抽出して表示
-                    const fileName = key; // 画像のキーをそのまま使用
-                    const extractedText = fileName.match(/^pic\d+(.+?)\.jpg$/)?.[1] || 'No picturename';
-                    // 抽出結果を表示
+        
+                    // ファイル名をそのまま表示
                     const extractedTextElement = document.getElementById('imageDescription');
-                    extractedTextElement.textContent = `画像情報: ${extractedText}`;
+                    extractedTextElement.textContent = `画像情報: ${key}`; // keyをそのまま表示
 
                 } else {
                     // クエリパラメータがない場合のエラー
@@ -101,7 +99,7 @@
             };
         </script>
         
-        <p style="color:red">注：このサイトは、ゲーム終了後1時間でアクセス不可となります。</p>
+        <p style="color:red">注：この画像は、ゲーム終了後1時間でサイトから消えます。</p>
     </main>
 
     <footer>
