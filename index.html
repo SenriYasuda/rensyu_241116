@@ -10,34 +10,13 @@
             margin: 0;
             font-family: Arial, sans-serif;
         }
-        h1,h2,h3,p{
+        h1, h2, h3, p {
             text-align: center;
         }
-        footer p{
+        footer p {
             text-align: right;
             font-size: 0.8em;
         }
-        .jumping-text span {
-            display: inline-block;
-            animation: jump 7s ease-in-out infinite;
-        }
-        @keyframes jump {
-            0% { transform: translateY(0); }
-            2% { transform: translateY(-1.5vh); }
-            7% { transform: translateY(0); }
-        }
-        .jumping-text span:nth-child(1) {animation-delay: 0s;}
-        .jumping-text span:nth-child(2) {animation-delay: 0.05s;}
-        .jumping-text span:nth-child(3) {animation-delay: 0.10s;}
-        .jumping-text span:nth-child(4) {animation-delay: 0.15s;}
-        .jumping-text span:nth-child(5) {animation-delay: 0.20s;}
-        .jumping-text span:nth-child(6) {animation-delay: 0.25s;}
-        .jumping-text span:nth-child(7) {animation-delay: 0.30s;}
-        .jumping-text span:nth-child(8) {animation-delay: 0.35s;}
-        .jumping-text span:nth-child(9)  {animation-delay: 0.40s;}
-        .jumping-text span:nth-child(10) {animation-delay: 0.45s;}
-        .jumping-text span:nth-child(11) {animation-delay: 0.50s;}
-        .jumping-text span:nth-child(12) {animation-delay: 0.55s;}
         .underlined-text {
             text-decoration: underline;
         }
@@ -45,12 +24,7 @@
 </head>
 <body>
     <header>
-        <h1 class="jumping-text">
-            <span>T</span><span>H</span><span>A</span><span>N</span><span>K</span><span> </span>
-            <span>Y</span><span>O</span><span>U</span><span> </span>
-            <span>F</span><span>O</span><span>R</span><span> </span>
-            <span>P</span><span>L</span><span>A</span><span>Y</span><span>I</span><span>N</span><span>G</span>
-        </h1>
+        <h1>ゲーム結果</h1>
     </header>
     <main>
         <h2 class="underlined-text">ゲーム結果</h2>
@@ -62,21 +36,20 @@
         <!-- 画像の説明表示 -->
         <p id="imageDescription" style="text-align: center; font-size: 1.2em; margin-top: 10px;"></p>
 
-
         <!-- エラーメッセージ -->
-        <p id="errorMessage_Nopicture" style="color: red; display: none;">error: no picture</p>
-        <p id="errorMessage_Notext" style="color: red; display: none;">error: no text</p>
-        <p id="errorMessage_Nokey" style="color: red; display: none;">error: no picture and text</p>
+        <p id="errorMessage_Nopicture" style="color: red; display: none;">エラー: 画像が見つかりません</p>
+        <p id="errorMessage_Nokey" style="color: red; display: none;">エラー: クエリパラメータ "key" がありません</p>
 
         <script>
             window.onload = function() {
                 const params = new URLSearchParams(window.location.search);
                 const key = params.get('key'); // URLパラメータ "key" を取得
-        
-                if (key) {
-                    const imageUrl = `https://ren-241121.onrender.com/get_image/${key}?t=${new Date().getTime()}`;
 
-                    // 画像処理
+                if (key) {
+                    // 画像のURLを生成
+                    const imageUrl = `https://ren-241121.onrender.com/get_image/pic${key}.jpg`;
+
+                    // 画像を表示
                     const imgElement = document.getElementById('resultImage');
                     imgElement.src = imageUrl;
                     imgElement.onload = function() {
@@ -87,23 +60,23 @@
                         document.getElementById('errorMessage_Nopicture').style.display = "block";
                     };
 
-        
-                    // ファイル名をそのまま表示
-                    const extractedTextElement = document.getElementById('imageDescription');
-                    extractedTextElement.textContent = `画像情報: ${key}`; // keyをそのまま表示
+                    // メッセージ部分を抽出
+                    const fileName = `pic${key}例です.jpg`; // サーバー上のファイル名
+                    const extractedMessage = fileName.match(/^pic\d+(.+?)\.jpg$/)?.[1] || '不明なメッセージ';
+                    document.getElementById('imageDescription').textContent = `メッセージ: ${extractedMessage}`;
 
                 } else {
-                    // クエリパラメータがない場合のエラー
+                    // クエリパラメータ "key" がない場合
                     document.getElementById('errorMessage_Nokey').style.display = "block";
                 }
             };
         </script>
-        
+
         <p style="color:red">注：この画像は、ゲーム終了後1時間でサイトから消えます。</p>
     </main>
 
     <footer>
-        <p>アライグマゲーミング 製作</p>
+        <p>アライグマゲーミング 製作あ</p>
     </footer>
 </body>
 </html>
