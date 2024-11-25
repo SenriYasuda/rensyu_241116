@@ -89,8 +89,7 @@
 
                     // ファイル名から文字列を抽出して表示
                     const fileName = key; // 画像のキーをそのまま使用
-                    const extractedText = fileName.replace(/^pic\d+/, '').replace(/\.jpg$/, ''); // 前の"pic数字"と拡張子".jpg"を除去
-            
+                    const extractedText = fileName.match(/^pic\d+(.+)\.jpg$/)?.[1];            
                     // 抽出結果を表示
                     const extractedTextElement = document.getElementById('imageDescription');
                     extractedTextElement.textContent = `画像情報: ${extractedText}`;
