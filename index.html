@@ -10,10 +10,10 @@
             margin: 0;
             font-family: Arial, sans-serif;
         }
-        h1, h2, h3, p {
+        h1,h2,h3,p{
             text-align: center;
         }
-        footer p {
+        footer p{
             text-align: right;
             font-size: 0.8em;
         }
@@ -60,22 +60,21 @@
         <img id="resultImage" src="" alt="ゲーム結果画像" style="max-width: 100%; height: auto; display: none; margin: 0 auto;">
 
         <!-- 画像の説明表示 -->
-        <p id="imageDescription" style="text-align: center; font-size: 1.2em; margin-top: 10px;"></p>
+        <p id="imageMessage" style="text-align: center; font-size: 1.2em; margin-top: 10px;"></p>
 
         <!-- エラーメッセージ -->
-        <p id="errorMessage_Nopicture" style="color: red; display: none;">error: no picture</p>
-        <p id="errorMessage_Nokey" style="color: red; display: none;">error: no picture and text</p>
+        <p id="errorMessage" style="color: red; display: none;">エラー: 正しい画像が取得できませんでした。</p>
 
         <script>
-            window.onload = async function() {
+            window.onload = function() {
                 const params = new URLSearchParams(window.location.search);
                 const key = params.get('key'); // URLパラメータ "key" を取得
 
                 if (key) {
-                    const imageUrl = `https://yourserver.com/get_image/${key}`;
-                    const imageNameUrl = `https://yourserver.com/get_image_name/${key}`;
+                    // サーバー上の画像URL
+                    const imageUrl = `https://ren-241121.onrender.com/get_image/${key}?t=${new Date().getTime()}`;
 
-                    // 画像処理
+                    // 画像表示
                     const imgElement = document.getElementById('resultImage');
                     imgElement.src = imageUrl;
                     imgElement.onload = function() {
@@ -83,32 +82,24 @@
                     };
                     imgElement.onerror = function() {
                         imgElement.style.display = "none";
-                        document.getElementById('errorMessage_Nopicture').style.display = "block";
+                        document.getElementById('errorMessage').style.display = "block";
                     };
 
-                    // ファイル名処理
-                    try {
-                        const response = await fetch(imageNameUrl);
-                        if (response.ok) {
-                            const imageName = await response.json();
-                            const extractedMessage = imageName.replace(/^pic\d+(.+?)\.jpg$/, '$1'); // メッセージを抽出
-                            const extractedTextElement = document.getElementById('imageDescription');
-                            extractedTextElement.textContent = `画像情報: ${extractedMessage}`;
-                        } else {
-                            throw new Error("ファイル名取得に失敗しました");
-                        }
-                    } catch (error) {
-                        console.error("エラー:", error);
-                        document.getElementById('errorMessage_Nokey').style.display = "block";
-                    }
+                    // ファイル名からメッセージ部分を抽出
+                    const fileName = `pic${key}.jpg`; // ファイル名を構成
+                    const messageMatch = fileName.match(/^pic\d+(.+?)\.jpg$/); // 正規表現でメッセージ部分を抽出
+                    const message = messageMatch ? messageMatch[1] : "メッセージが見つかりません";
 
+                    // 抽出したメッセージを表示
+                    const messageElement = document.getElementById('imageMessage');
+                    messageElement.textContent = `メッセージ: ${message}`;
                 } else {
-                    // クエリパラメータがない場合のエラー
-                    document.getElementById('errorMessage_Nokey').style.display = "block";
+                    // key が存在しない場合
+                    document.getElementById('errorMessage').style.display = "block";
                 }
             };
         </script>
-
+        
         <p style="color:red">注：この画像は、ゲーム終了後1時間でサイトから消えます。</p>
     </main>
 
