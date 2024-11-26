@@ -50,6 +50,34 @@
         .underlined-text {
             text-decoration: underline;
         }
+
+        /* 中央揃えのためのスタイル */
+        .button-container {
+            display: flex; /* フレックスボックスを使用 */
+            justify-content: center; /* 水平方向に中央揃え */
+            align-items: center; /* 垂直方向に中央揃え */
+            height: 100vh; /* 画面全体の高さ */
+            flex-direction: column; /* ボタンを縦に並べる */
+        }
+
+        button {
+            margin: 10px; /* ボタン間の余白 */
+            padding: 10px 20px; /* ボタンの余白 */
+            font-size: 16px; /* ボタンの文字サイズ */
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        #lineShareButton {
+            background-color: #00c300; /* LINEの緑色 */
+            color: white;
+        }
+
+        #twitterShareButton {
+            background-color: #1DA1F2; /* Twitterの青色 */
+            color: white;
+        }
     </style>
 </head>
 <body>
