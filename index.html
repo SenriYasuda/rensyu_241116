@@ -10,10 +10,10 @@
             margin: 0;
             font-family: Arial, sans-serif;
         }
-        h1,h2,h3,p{
+        h1, h2, h3, p {
             text-align: center;
         }
-        footer p{
+        footer p {
             text-align: right;
             font-size: 0.8em;
         }
@@ -26,27 +26,27 @@
             2% { transform: translateY(-1.5vh); }
             7% { transform: translateY(0); }
         }
-        .jumping-text span:nth-child(1) {animation-delay: 0s;}
-        .jumping-text span:nth-child(2) {animation-delay: 0.05s;}
-        .jumping-text span:nth-child(3) {animation-delay: 0.10s;}
-        .jumping-text span:nth-child(4) {animation-delay: 0.15s;}
-        .jumping-text span:nth-child(5) {animation-delay: 0.20s;}
-        .jumping-text span:nth-child(6) {animation-delay: 0.25s;}
-        .jumping-text span:nth-child(7) {animation-delay: 0.30s;}
-        .jumping-text span:nth-child(8) {animation-delay: 0.35s;}
-        .jumping-text span:nth-child(9)  {animation-delay: 0.40s;}
-        .jumping-text span:nth-child(10) {animation-delay: 0.45s;}
-        .jumping-text span:nth-child(11) {animation-delay: 0.50s;}
-        .jumping-text span:nth-child(12) {animation-delay: 0.55s;}
-        .jumping-text span:nth-child(13) {animation-delay: 0.60s;}
-        .jumping-text span:nth-child(14) {animation-delay: 0.65s;}
-        .jumping-text span:nth-child(15) {animation-delay: 0.70s;}
-        .jumping-text span:nth-child(16) {animation-delay: 0.75s;}
-        .jumping-text span:nth-child(17) {animation-delay: 0.80s;}
-        .jumping-text span:nth-child(18) {animation-delay: 0.85s;}
-        .jumping-text span:nth-child(19) {animation-delay: 0.90s;}
-        .jumping-text span:nth-child(20) {animation-delay: 0.95s;}
-        .jumping-text span:nth-child(21) {animation-delay: 1.00s;}
+        .jumping-text span:nth-child(1) { animation-delay: 0s; }
+        .jumping-text span:nth-child(2) { animation-delay: 0.05s; }
+        .jumping-text span:nth-child(3) { animation-delay: 0.10s; }
+        .jumping-text span:nth-child(4) { animation-delay: 0.15s; }
+        .jumping-text span:nth-child(5) { animation-delay: 0.20s; }
+        .jumping-text span:nth-child(6) { animation-delay: 0.25s; }
+        .jumping-text span:nth-child(7) { animation-delay: 0.30s; }
+        .jumping-text span:nth-child(8) { animation-delay: 0.35s; }
+        .jumping-text span:nth-child(9) { animation-delay: 0.40s; }
+        .jumping-text span:nth-child(10) { animation-delay: 0.45s; }
+        .jumping-text span:nth-child(11) { animation-delay: 0.50s; }
+        .jumping-text span:nth-child(12) { animation-delay: 0.55s; }
+        .jumping-text span:nth-child(13) { animation-delay: 0.60s; }
+        .jumping-text span:nth-child(14) { animation-delay: 0.65s; }
+        .jumping-text span:nth-child(15) { animation-delay: 0.70s; }
+        .jumping-text span:nth-child(16) { animation-delay: 0.75s; }
+        .jumping-text span:nth-child(17) { animation-delay: 0.80s; }
+        .jumping-text span:nth-child(18) { animation-delay: 0.85s; }
+        .jumping-text span:nth-child(19) { animation-delay: 0.90s; }
+        .jumping-text span:nth-child(20) { animation-delay: 0.95s; }
+        .jumping-text span:nth-child(21) { animation-delay: 1.00s; }
         .underlined-text {
             text-decoration: underline;
         }
@@ -71,20 +71,22 @@
         <!-- 画像の説明表示 -->
         <p id="imageDescription" style="text-align: center; font-size: 1.2em; margin-top: 10px;"></p>
 
+        <!-- メッセージ表示 -->
+        <p id="messageDisplay" style="text-align: center; font-size: 1.2em; margin-top: 20px; color: green;"></p>
 
         <!-- エラーメッセージ -->
         <p id="errorMessage_Nopicture" style="color: red; display: none;">error: no picture</p>
-        <p id="errorMessage_Notext" style="color: red; display: none;">error: no text</p>
-        <p id="errorMessage_Nokey" style="color: red; display: none;">error: no picture and text</p>
+        <p id="errorMessage_NoKey" style="color: red; display: none;">error: no picture and text</p>
 
         <script>
             window.onload = function() {
                 const params = new URLSearchParams(window.location.search);
                 const key = params.get('key'); // URLパラメータ "key" を取得
-        
-                if (key) {
-                    const imageUrl = `https://ren-241121.onrender.com/get_image/${key}?t=${new Date().getTime()}`;
 
+                if (key) {
+                    // 画像取得URL
+                    const imageUrl = `https://ren-241121.onrender.com/get_image/${key}?t=${new Date().getTime()}`;
+                    
                     // 画像処理
                     const imgElement = document.getElementById('resultImage');
                     imgElement.src = imageUrl;
@@ -96,9 +98,26 @@
                         document.getElementById('errorMessage_Nopicture').style.display = "block";
                     };
 
+                    // メッセージ取得
+                    const messageUrl = `https://ren-241121.onrender.com/get_name/${key}`;
+                    fetch(messageUrl)
+                        .then(response => {
+                            if (!response.ok) {
+                                throw new Error("メッセージの取得に失敗しました");
+                            }
+                            return response.text();
+                        })
+                        .then(text => {
+                            // 最初の数字を削除してメッセージのみ表示
+                            const message = text.replace(/^\d+/, ""); // 数字を削除
+                            document.getElementById('messageDisplay').textContent = message;
+                        })
+                        .catch(error => {
+                            console.error(error);
+                        });
                 } else {
                     // クエリパラメータがない場合のエラー
-                    document.getElementById('errorMessage_Nokey').style.display = "block";
+                    document.getElementById('errorMessage_NoKey').style.display = "block";
                 }
             };
         </script>
