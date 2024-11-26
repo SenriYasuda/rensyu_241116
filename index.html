@@ -84,7 +84,6 @@
         
                 if (key) {
                     const imageUrl = `https://ren-241121.onrender.com/get_image/${key}?t=${new Date().getTime()}`;
-                    const nameUrl = `https://ren-241121.onrender.com/get_image_name/${key}?t=${new Date().getTime()}`;
 
                     // 画像処理
                     const imgElement = document.getElementById('resultImage');
@@ -96,19 +95,7 @@
                         imgElement.style.display = "none";
                         document.getElementById('errorMessage_Nopicture').style.display = "block";
                     };
-                    // 画像名の取得と表示
-                    fetch(nameUrl)
-                        .then(response => response.text())
-                        .then(imageName => {
-                            const nameElement = document.getElementById('resultImageName');
-                            if (nameElement) {
-                                nameElement.textContent = imageName;  // 画像名を表示
-                            }
-                        })
-                        .catch(error => {
-                            console.error("画像名の取得に失敗しました:", error);
-                            document.getElementById('errorMessage_Notext').style.display = "block";
-                        });
+
                 } else {
                     // クエリパラメータがない場合のエラー
                     document.getElementById('errorMessage_Nokey').style.display = "block";
