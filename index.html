@@ -77,13 +77,16 @@
         <!-- エラーメッセージ -->
         <p id="errorMessage_Nopicture" style="color: red; display: none;">error: no picture</p>
         <p id="errorMessage_NoKey" style="color: red; display: none;">error: no picture and text</p>
+        <p id="resultMessage" style="text-align: center; font-size: 1.5em; margin-top: 20px;"></p>
 
         <script>
             window.onload = function() {
                 const params = new URLSearchParams(window.location.search);
                 const key = params.get('key'); // URLパラメータ "key" を取得
+                const score = params.get('score'); // URLパラメータ "得点" を取得
+                const food = params.get('food'); // URLパラメータ"食べ物"を所得
 
-                if (key) {
+                if (key && food && score) {
                     // 画像取得URL
                     const imageUrl = `https://ren-241121.onrender.com/get_image/${key}?t=${new Date().getTime()}`;
                     
@@ -97,24 +100,11 @@
                         imgElement.style.display = "none";
                         document.getElementById('errorMessage_Nopicture').style.display = "block";
                     };
+            
+                    //tetを表示
+                    const resultMessage = `あなたは${food}を作り${score}点を取れたよ！`;
+                    document.getElementById('resultMessage').textContent = resultMessage;
 
-                    // メッセージ取得
-                    const messageUrl = `https://ren-241121.onrender.com/get_name/${key}`;
-                    fetch(messageUrl)
-                        .then(response => {
-                            if (!response.ok) {
-                                throw new Error("メッセージの取得に失敗しました");
-                            }
-                            return response.text();
-                        })
-                        .then(text => {
-                            // 最初の数字を削除してメッセージのみ表示
-                            const message = text.replace(/^\d+/, ""); // 数字を削除
-                            document.getElementById('messageDisplay').textContent = message;
-                        })
-                        .catch(error => {
-                            console.error(error);
-                        });
                 } else {
                     // クエリパラメータがない場合のエラー
                     document.getElementById('errorMessage_NoKey').style.display = "block";
