@@ -56,8 +56,8 @@
             display: flex; /* フレックスボックスを使用 */
             justify-content: center; /* 水平方向に中央揃え */
             align-items: center; /* 垂直方向に中央揃え */
-            height: 100vh; /* 画面全体の高さ */
-            flex-direction: column; /* ボタンを縦に並べる */
+            height: 10vh; /* 画面全体の高さ */
+            margin-top: 5vh; /* ボタンを縦に並べる */
         }
 
         button {
@@ -139,9 +139,14 @@
                 }
             };
         </script>
-        
-        <button id="lineShareButton">LINEで共有</button>
 
+
+        <div class="button-container">
+            <button id="lineShareButton">LINEで共有</button>
+            <button id="twitterShareButton">Twitterで共有</button>
+        </div>
+        
+        
         <script>
             document.getElementById('lineShareButton').addEventListener('click', function() {
                 // パラメータの設定
@@ -163,9 +168,6 @@
                 window.open(lineShareUrl, '_blank');
             });
         </script>
-        
-
-        <button id="twitterShareButton">Twitterで共有</button>
 
         <script>
             document.getElementById('twitterShareButton').addEventListener('click', function() {
