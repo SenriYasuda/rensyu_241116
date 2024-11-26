@@ -136,6 +136,31 @@
             });
         </script>
         
+
+        <button id="twitterShareButton">Twitterで共有</button>
+
+        <script>
+            document.getElementById('twitterShareButton').addEventListener('click', function() {
+                // パラメータの設定
+                const food = "オムレツ"; // 実際にはURLパラメータなどから取得する
+                const score = "95";     // 実際にはURLパラメータなどから取得する
+                const gameUrl = "http://example.com"; // 実際のゲームURL
+
+                // メッセージを生成
+                const message = encodeURIComponent(
+                    `#アライグマゲーミング\n\n` +
+                    `〇〇〇に行って、アライグマゲーミングのEGGを遊んだよ！\n` +
+                    `私は${food}で${score}点取れた！\n` +
+                    `次のurlで遊ぶことが出来るよ\n${gameUrl}`
+                );
+
+                // Twitter Web Intentを利用して共有
+                const twitterShareUrl = `https://twitter.com/intent/tweet?text=${message}`;
+
+                // 新しいタブでTwitter共有を開く
+                window.open(twitterShareUrl, '_blank');
+            });
+        </script>
         
         <p style="color:red">注：この画像は、ゲーム終了後1時間でサイトから消えます。</p>
     </main>
