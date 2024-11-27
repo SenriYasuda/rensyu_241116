@@ -149,8 +149,9 @@
         <script>
             document.getElementById('lineShareButton').addEventListener('click', function() {
                 // パラメータの設定
-                const food = "オムレツ"; // 実際にはURLパラメータなどから取得する
-                const score = "95";     // 実際にはURLパラメータなどから取得する
+                const key = params.get('key'); // URLパラメータ "key" を取得
+                const score = params.get('score'); // URLパラメータ "得点" を取得
+                const food = params.get('food'); // URLパラメータ"食べ物"を所得
                 const gameUrl = "http://example.com"; // 実際のゲームURL
         
                 // メッセージを生成
@@ -171,6 +172,9 @@
         <script>
             document.getElementById('twitterShareButton').addEventListener('click', function() {
                 // パラメータの設定
+                const key = params.get('key'); // URLパラメータ "key" を取得
+                const score = params.get('score'); // URLパラメータ "得点" を取得
+                const food = params.get('food'); // URLパラメータ"食べ物"を所得
                 const gameUrl = "http://example.com"; // 実際のゲームURL
 
                 // メッセージを生成
