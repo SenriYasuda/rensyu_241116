@@ -173,6 +173,7 @@
         <script>
             document.getElementById('twitterShareButton').addEventListener('click', function() {
                 // パラメータの設定
+                const params = new URLSearchParams(window.location.search);
                 const key = params.get('key'); // URLパラメータ "key" を取得
                 const score = params.get('score'); // URLパラメータ "得点" を取得
                 const food = params.get('food'); // URLパラメータ"食べ物"を所得
@@ -188,6 +189,7 @@
 
                 // Twitter Web Intentを利用して共有
                 const twitterShareUrl = `https://twitter.com/intent/tweet?text=${message}`;
+                //const twitterShareUrl = `https://twitter.com/intent/tweet?text="a"`;
 
                 // 新しいタブでTwitter共有を開く
                 window.open(twitterShareUrl, '_blank');
