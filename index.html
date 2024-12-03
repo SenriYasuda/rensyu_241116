@@ -127,7 +127,7 @@
                 const score = params.get('score'); // URLパラメータ "得点" を取得
                 const food = params.get('food'); // URLパラメータ"食べ物"を所得
 
-                if (key && food && score) {
+                if (key) {
                     // 画像取得URL
                     const imageUrl = `https://ren-241121.onrender.com/get_image/${key}?t=${new Date().getTime()}`;
                     
