@@ -83,7 +83,7 @@
 
         
         body {
-            background-image: url('background.jpg'); /* 背景画像*/
+            background-image: url('background.jpg');
             background-size: cover;
             background-repeat: no-repeat;
             background-attachment: fixed;
@@ -102,7 +102,7 @@
         </h1>
     </header>
     <main>
-        <hr>
+        
         <h2 class="underlined-text">＜ゲーム結果＞</h2>
 
         <!-- 画像表示 -->
@@ -117,7 +117,6 @@
         <!-- エラーメッセージ -->
         <p id="errorMessage_Nopicture" style="color: red; display: none;">error: no picture</p>
         <p id="errorMessage_NoKey" style="color: red; display: none;">error: no data</p>
-        <p id="resultMessage" style="text-align: center; font-size: 1.5em; margin-top: 20px;"></p>
 
         <script>
             let key = ""
@@ -137,8 +136,6 @@
                         imgElement.style.display = "none";
                         document.getElementById('errorMessage_Nopicture').style.display = "block";
                     };
-            
-                    document.getElementById('resultMessage').textContent = resultMessage;
 
                 } else {
                     document.getElementById('errorMessage_NoKey').style.display = "block";
