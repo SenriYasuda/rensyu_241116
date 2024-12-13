@@ -53,7 +53,6 @@
         .underlined-text {
             text-decoration: underline;
         }
-
         .button-container {
             display: flex;
             justify-content: center;
@@ -61,7 +60,6 @@
             height: 6vh;
             margin-top: 5vh;
         }
-
         button {
             margin: 10px;
             padding: 10px 20px;
@@ -70,18 +68,14 @@
             border-radius: 5px;
             cursor: pointer;
         }
-
         #lineShareButton {
             background-color: #00c300;
             color: white;
         }
-
         #twitterShareButton {
             background-color: #1DA1F2;
             color: white;
         }
-
-        
         body {
             background-image: url('background.jpg');
             background-size: cover;
@@ -89,7 +83,6 @@
             background-attachment: fixed;
             background-position: center;
         }
-
     </style>
 </head>
 <body>
@@ -114,7 +107,7 @@
         <!-- メッセージ表示 -->
         <p id="messageDisplay" style="text-align: center; font-size: 1.2em; margin-top: 20px; color: green;"></p>
 
-        <!-- エラーメッセージ -->
+        <!-- error -->
         <p id="errorMessage_Nopicture" style="color: red; display: none;">error: no picture</p>
         <p id="errorMessage_NoKey" style="color: red; display: none;">error: no data</p>
 
@@ -122,7 +115,7 @@
             let key = ""
             window.onload = function() {
                 const params = new URLSearchParams(window.location.search);
-                const key = params.get('key'); // key
+                const key = params.get('key');
 
                 if (key) {
                     const imageUrl = `https://ren-241121.onrender.com/get_image/${key}?t=${new Date().getTime()}`;
@@ -184,7 +177,7 @@
             });
         </script>
         
-        <p style="color:red">注：この画像は、ゲーム終了後1時間でサイトから消えます。</p>
+        <p style="color:red">注：この画像は、ゲーム終了後10分でサイトから消えます。</p>
     </main>
 
     <footer>
